@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo POS - Ventas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-100 font-sans h-screen flex flex-col">
+
+    <header class="bg-blue-600 text-white px-6 py-4 shadow-md flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <h1 class="text-xl font-bold">Módulo POS - Registro Rápido de Ventas</h1>
+        </div>
+        <span class="bg-blue-700 px-3 py-1 rounded-full text-sm font-semibold">General / Funcional</span>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden p-4 gap-4">
+        
+        <section class="w-2/3 bg-white rounded-lg shadow flex flex-col p-4 overflow-hidden">
+            <div class="mb-4">
+                <label for="buscar-producto" class="block text-sm font-medium text-gray-700 mb-1">Búsqueda de productos</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </span>
+                    <input type="text" id="buscar-producto" 
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" 
+                           placeholder="Escanee el código de barras o busque manualmente (Ej: Producto A)...">
+                </div>
+                <p class="text-xs text-gray-400 mt-1">Presiona "Enter" en el buscador para simular agregar un producto rápido.</p>
+            </div>
+
+            <div class="flex-1 overflow-y-auto border border-gray-200 rounded-lg">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-50 sticky top-0 border-b border-gray-200">
+                        <tr>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase">Código</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase">Descripción</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase w-24">Cantidad</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase">Precio Unit.</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase w-24">Desc. ($)</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase">Subtotal</th>
+                            <th class="p-3 text-xs font-semibold text-gray-600 uppercase text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-ventas-body" class="divide-y divide-gray-200">
+                        </tbody>
+                </table>
+                <div id="tabla-vacia" class="text-center py-12 text-gray-400">
+                    <i data-lucide="package-open" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
+                    <p>No hay productos agregados a la venta.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-1/3 bg-white rounded-lg shadow flex flex-col p-4 justify-between">
+            <div class="space-y-6">
+                <div>
+                    <label for="selector-cliente" class="block text-sm font-medium text-gray-700 mb-1">Cliente</label>
+                    <select id="selector-cliente" class="w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="general">Cliente General (Venta Pública)</option>
+                        <option value="1">Juan Pérez (RUC/DNI: 10456789123)</option>
+                        <option value="2">María Rodriguez (RUC/DNI: 20987654321)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Método de pago</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="border p-3 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500">
+                            <input type="radio" name="metodo_pago" value="efectivo" checked class="sr-only peer">
+                            <i data-lucide="banknote" class="w-5 h-5 text-gray-600 mb-1"></i>
+                            <span class="text-xs font-medium">Efectivo</span>
+                        </label>
+                        <label class="border p-3 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="metodo_pago" value="tarjeta" class="sr-only">
+                            <i data-lucide="credit-card" class="w-5 h-5 text-gray-600 mb-1"></i>
+                            <span class="text-xs font-medium">Tarjeta</span>
+                        </label>
+                        <label class="border p-3 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="metodo_pago" value="transferencia" class="sr-only">
+                            <i data-lucide="arrow-left-right" class="w-5 h-5 text-gray-600 mb-1"></i>
+                            <span class="text-xs font-medium">Transfer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr class="border-gray-200">
+
+                <div class="space-y-3 bg-gray-50 p-4 rounded-lg">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>Subtotal Parcial:</span>
+                        <span id="resumen-subtotal">S/ 0.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>Descuentos totales:</span>
+                        <span id="resumen-descuento" class="text-green-600">-S/ 0.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>Impuestos (IGV 18%):</span>
+                        <span id="resumen-impuestos">S/ 0.00</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-bold text-gray-800 pt-2 border-t border-gray-200">
+                        <span>Total Neto:</span>
+                        <span id="resumen-total" class="text-blue-600">S/ 0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-confirmar" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow transition flex items-center justify-center space-x-2 mt-4">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                <span>Confirmar Venta / Finalizar</span>
+            </button>
+        </section>
+    </main>
+
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+
+        // Estado local de la venta (Simulación de base de datos en memoria)
+        let carrito = [
+            { codigo: 'P001', descripcion: 'Laptop Core i5 16GB', cantidad: 1, precio: 2450.00, descuento: 50.00 },
+            { codigo: 'P002', descripcion: 'Mouse Ergonómico Inalámbrico', cantidad: 2, precio: 45.00, descuento: 0.00 }
+        ];
+
+        // Elementos del DOM
+        const tablaBody = document.getElementById('tabla-ventas-body');
+        const tablaVacia = document.getElementById('tabla-vacia');
+        const inputBuscar = document.getElementById('buscar-producto');
+        
+        const resSubtotal = document.getElementById('resumen-subtotal');
+        const resDescuento = document.getElementById('resumen-descuento');
+        const resImpuestos = document.getElementById('resumen-impuestos');
+        const resTotal = document.getElementById('resumen-total');
+        const btnConfirmar = document.getElementById('btn-confirmar');
+
+        // Renderizar la tabla de ventas
+        function renderizarTabla() {
+            tablaBody.innerHTML = '';
+            
+            if (carrito.length === 0) {
+                tablaVacia.classList.remove('hidden');
+                actualizarTotales();
+                return;
+            }
+            
+            tablaVacia.classList.add('hidden');
+
+            carrito.forEach((item, index) => {
+                const subtotalParcial = (item.cantidad * item.precio) - item.descuento;
+                
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50 transition-colors';
+                tr.innerHTML = `
+                    <td class="p-3 text-sm text-gray-700 font-mono">${item.codigo}</td>
+                    <td class="p-3 text-sm text-gray-900 font-medium">${item.descripcion}</td>
+                    <td class="p-3">
+                        <input type="number" min="1" value="${item.cantidad}" onchange="cambiarCantidad(${index}, this.value)" 
+                               class="w-16 p-1 border border-gray-300 rounded text-center focus:ring-1 focus:ring-blue-500 outline-none">
+                    </td>
+                    <td class="p-3 text-sm text-gray-700">S/ ${item.precio.toFixed(2)}</td>
+                    <td class="p-3">
+                        <input type="number" min="0" value="${item.descuento}" onchange="cambiarDescuento(${index}, this.value)" 
+                               class="w-20 p-1 border border-gray-300 rounded text-center text-green-600 focus:ring-1 focus:ring-blue-500 outline-none">
+                    </td>
+                    <td class="p-3 text-sm font-semibold text-gray-800">S/ ${subtotalParcial.toFixed(2)}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="eliminarProducto(${index})" class="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4 mx-auto"></i>
+                        </button>
+                    </td>
+                `;
+                tablaBody.appendChild(tr);
+            });
+            
+            lucide.createIcons();
+            actualizarTotales();
+        }
+
+        // Calcular e inyectar totales (Manejo del IGV 18%)
+        function actualizarTotales() {
+            let totalBruto = 0;
+            let totalDescuentos = 0;
+
+            carrito.forEach(item => {
+                totalBruto += item.cantidad * item.precio;
+                totalDescuentos += Number(item.descuento);
+            });
+
+            const subtotalConDescuento = totalBruto - totalDescuentos;
+            // Cálculo base: En Perú el precio suele incluir IGV, aquí asumiremos desglose para el POS
+            const baseImponible = subtotalConDescuento / 1.18;
+            const igv = subtotalConDescuento - baseImponible;
+
+            resSubtotal.innerText = `S/ ${baseImponible.toFixed(2)}`;
+            resDescuento.innerText = `-S/ ${totalDescuentos.toFixed(2)}`;
+            resImpuestos.innerText = `S/ ${igv.toFixed(2)}`;
+            resTotal.innerText = `S/ ${subtotalConDescuento.toFixed(2)}`;
+        }
+
+        // Operaciones funcionales del carrito
+        function cambiarCantidad(index, valor) {
+            if(valor < 1) valor = 1;
+            carrito[index].cantidad = parseInt(valor);
+            renderizarTabla();
+        }
+
+        function cambiarDescuento(index, valor) {
+            if(valor < 0 || valor === '') valor = 0;
+            carrito[index].descuento = parseFloat(valor);
+            renderizarTabla();
+        }
+
+        function eliminarProducto(index) {
+            carrito.splice(index, 1);
+            renderizarTabla();
+        }
+
+        // Simulación de escaneo de código o búsqueda manual
+        inputBuscar.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                // Producto demo rápido aleatorio
+                const nuevoItem = {
+                    codigo: 'P' + Math.floor(100 + Math.random() * 900),
+                    descripcion: this.value.trim(),
+                    cantidad: 1,
+                    precio: parseFloat((Math.random() * 100 + 10).toFixed(2)),
+                    descuento: 0.00
+                };
+                carrito.push(nuevoItem);
+                this.value = '';
+                renderizarTabla();
+            }
+        });
+
+        // Evento del botón de confirmación
+        btnConfirmar.addEventListener('click', () => {
+            if(carrito.length === 0) {
+                alert('¡Atención! No puedes procesar una venta sin productos en la tabla.');
+                return;
+            }
+            const cliente = document.getElementById('selector-cliente').value;
+            const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
+            
+            alert(`¡Transacción Finalizada con Éxito!\n\nCliente: ${cliente}\nMétodo de Pago: ${metodoPago.toUpperCase()}\nTotal Cobrado: ${resTotal.innerText}`);
+            
+            // Vaciar el carrito tras confirmar la venta
+            carrito = [];
+            renderizarTabla();
+        });
+
+        // Estilos interactivos visuales para los radio buttons de métodos de pago
+        document.querySelectorAll('input[name="metodo_pago"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('input[name="metodo_pago"]').forEach(r => {
+                    r.parentElement.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+                });
+                if (this.checked) {
+                    this.parentElement.
