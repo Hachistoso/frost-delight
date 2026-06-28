@@ -2,17 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Usuarios y Permisos</title>
+  <title>Catálogo de Productos</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f5f5f5;
       padding: 20px;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
       background: white;
       padding: 20px;
@@ -23,6 +23,29 @@
     h2 {
       text-align: center;
       margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      color: white;
+    }
+
+    .btn-create {
+      background: #27ae60;
+    }
+
+    .btn-import {
+      background: #2980b9;
     }
 
     table {
@@ -44,10 +67,19 @@
       padding: 12px;
       border-bottom: 1px solid #ddd;
       font-size: 14px;
+      vertical-align: middle;
     }
 
     tr:hover {
-      background: #f0eaea;
+      background: #f3eeee;
+    }
+
+    .img-product {
+      width: 45px;
+      height: 45px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid #ccc;
     }
 
     .badge {
@@ -57,16 +89,26 @@
       color: white;
     }
 
-    .activo {
-      background: #2ecc71;
+    .margen {
+      background: #8e44ad;
     }
 
-    .inactivo {
+    .btn-action {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 5px;
+      color: white;
+    }
+
+    .edit {
+      background: #f39c12;
+    }
+
+    .delete {
       background: #e74c3c;
-    }
-
-    .permiso {
-      background: #3498db;
     }
 
   </style>
@@ -76,8 +118,15 @@
 
 <div class="container">
 
-  <h2>👥 Administración de Usuarios y Permisos</h2>
+  <h2>🍨 Catálogo de Productos</h2>
 
+  <!-- Acciones -->
+  <div class="actions">
+    <button class="btn btn-create">+ Crear Producto</button>
+    <button class="btn btn-import">Importar CSV / Excel</button>
+  </div>
+
+  <!-- Tabla -->
   <table>
 
     <thead>
@@ -90,78 +139,89 @@
     </thead>
 
     <tbody>
+
       <tr>
         <td>General</td>
-        <td>Administración usuarios</td>
+        <td>Catálogo productos</td>
         <td>Funcional</td>
-        <td>Control de cuentas del sistema</td>
+        <td>Gestión de productos</td>
+      </tr>
+
+      <tr>
+        <td>Acción</td>
+        <td>Crear producto</td>
+        <td>Botón</td>
+        <td>Nuevo registro de producto</td>
+      </tr>
+
+      <tr>
+        <td>Acción</td>
+        <td>Importar</td>
+        <td>Botón</td>
+        <td>CSV / Excel</td>
       </tr>
 
       <tr>
         <td>Tabla</td>
-        <td>Nombre completo</td>
-        <td>Dato</td>
-        <td>Usuario del sistema</td>
-      </tr>
-
-      <tr>
-        <td>Tabla</td>
-        <td>Usuario</td>
-        <td>Dato</td>
-        <td>Login de acceso</td>
-      </tr>
-
-      <tr>
-        <td>Tabla</td>
-        <td>Rol</td>
-        <td>Dato</td>
-        <td>Permisos asignados</td>
-      </tr>
-
-      <tr>
-        <td>Tabla</td>
-        <td>Último acceso</td>
-        <td>Dato</td>
-        <td>Actividad reciente del usuario</td>
-      </tr>
-
-      <tr>
-        <td>Tabla</td>
-        <td>Estado</td>
-        <td>Dato</td>
+        <td>Miniatura</td>
+        <td>Imagen</td>
         <td>
-          <span class="badge activo">Activo</span>
-          /
-          <span class="badge inactivo">Inactivo</span>
+          <img class="img-product" src="https://via.placeholder.com/50" alt="producto">
         </td>
       </tr>
 
       <tr>
-        <td>Permisos</td>
-        <td>Lectura</td>
-        <td>Control</td>
-        <td><span class="badge permiso">Acceso a módulos</span></td>
+        <td>Tabla</td>
+        <td>Código barras</td>
+        <td>Dato</td>
+        <td>Identificador único</td>
       </tr>
 
       <tr>
-        <td>Permisos</td>
-        <td>Escritura</td>
-        <td>Control</td>
-        <td><span class="badge permiso">Crear registros</span></td>
+        <td>Tabla</td>
+        <td>Nombre</td>
+        <td>Dato</td>
+        <td>Nombre del producto</td>
       </tr>
 
       <tr>
-        <td>Permisos</td>
-        <td>Edición</td>
-        <td>Control</td>
-        <td><span class="badge permiso">Modificar datos</span></td>
+        <td>Tabla</td>
+        <td>Categoría</td>
+        <td>Dato</td>
+        <td>Clasificación del producto</td>
       </tr>
 
       <tr>
-        <td>Permisos</td>
-        <td>Eliminación</td>
-        <td>Control</td>
-        <td><span class="badge permiso">Borrar datos</span></td>
+        <td>Tabla</td>
+        <td>Costo</td>
+        <td>Dato</td>
+        <td>Precio base</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Precio venta</td>
+        <td>Dato</td>
+        <td>Precio final al público</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Margen</td>
+        <td>Dato</td>
+        <td>
+          <span class="badge margen">Ganancia</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Acciones</td>
+        <td>Botón</td>
+        <td>
+          <button class="btn-action edit">Editar</button>
+          <button class="btn-action delete">Eliminar</button>
+        </td>
       </tr>
 
     </tbody>
