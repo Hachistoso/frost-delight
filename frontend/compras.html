@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Compras - Heladería</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fdf6e3;
+            padding: 20px;
+        }
+
+        .header { text-align: center; color: #d2691e; }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid #ffebcd;
+        }
+
+        .price { color: #2e8b57; font-weight: bold; font-size: 1.2em; }
+
+        button {
+            background-color: #ff7f50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: #e66b3e; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🍦 Nuestro Menú de Helados</h1>
+    <p>Selecciona tus sabores favoritos</p>
+</div>
+
+<div class="menu-container">
+    <!-- Producto 1 -->
+    <div class="card">
+        <h3>Chocolate Suizo</h3>
+        <p class="price">$3.50</p>
+        <button>Añadir al Carrito</button>
+    </div>
+
+    <!-- Producto 2 -->
+    <div class="card">
+        <h3>Fresa Silvestre</h3>
+        <p class="price">$3.00</p>
+        <button>Añadir al Carrito</button>
+    </div>
+
+    <!-- Producto 3 -->
+    <div class="card">
+        <h3>Vainilla Francesa</h3>
+        <p class="price">$3.00</p>
+        <button>Añadir al Carrito</button>
+    </div>
+
+    <!-- Producto 4 -->
+    <div class="card">
+        <h3>Menta Chip</h3>
+        <p class="price">$3.50</p>
+        <button>Añadir al Carrito</button>
+    </div>
+</div>
+
+</body>
+</html>
