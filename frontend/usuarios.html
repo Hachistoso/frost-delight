@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios y Permisos</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    th {
+      background: #6b5b5b;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: #f0eaea;
+    }
+
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: white;
+    }
+
+    .activo {
+      background: #2ecc71;
+    }
+
+    .inactivo {
+      background: #e74c3c;
+    }
+
+    .permiso {
+      background: #3498db;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>👥 Administración de Usuarios y Permisos</h2>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Sección</th>
+        <th>Elemento</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>General</td>
+        <td>Administración usuarios</td>
+        <td>Funcional</td>
+        <td>Control de cuentas del sistema</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Nombre completo</td>
+        <td>Dato</td>
+        <td>Usuario del sistema</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Usuario</td>
+        <td>Dato</td>
+        <td>Login de acceso</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Rol</td>
+        <td>Dato</td>
+        <td>Permisos asignados</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Último acceso</td>
+        <td>Dato</td>
+        <td>Actividad reciente del usuario</td>
+      </tr>
+
+      <tr>
+        <td>Tabla</td>
+        <td>Estado</td>
+        <td>Dato</td>
+        <td>
+          <span class="badge activo">Activo</span>
+          /
+          <span class="badge inactivo">Inactivo</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Permisos</td>
+        <td>Lectura</td>
+        <td>Control</td>
+        <td><span class="badge permiso">Acceso a módulos</span></td>
+      </tr>
+
+      <tr>
+        <td>Permisos</td>
+        <td>Escritura</td>
+        <td>Control</td>
+        <td><span class="badge permiso">Crear registros</span></td>
+      </tr>
+
+      <tr>
+        <td>Permisos</td>
+        <td>Edición</td>
+        <td>Control</td>
+        <td><span class="badge permiso">Modificar datos</span></td>
+      </tr>
+
+      <tr>
+        <td>Permisos</td>
+        <td>Eliminación</td>
+        <td>Control</td>
+        <td><span class="badge permiso">Borrar datos</span></td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+</body>
+</html>
